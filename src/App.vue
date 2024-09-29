@@ -77,13 +77,13 @@ onMounted(async () => {
     '#app',
     ({el, isShow}) => {
       const actionBarEl = actionBarRef.value
-      if (!isShow) {
-        el.style.cursor = 'none'
-        actionBarEl.classList.remove('visible')
-      } else {
-        el.style.cursor = ''
-        actionBarEl.classList.add('visible')
-      }
+      // if (!isShow) {
+      //   el.style.cursor = 'none'
+      //   actionBarEl.classList.remove('visible')
+      // } else {
+      //   el.style.cursor = ''
+      //   actionBarEl.classList.add('visible')
+      // }
     },
     3000,
   )
@@ -319,13 +319,7 @@ const videoFilterStyle = computed(() => {
   <div ref="rootRef" class="web-mediadevices-player">
     <div class="loading-layer" :class="{visible: isLoading}">Connecting Devices...</div>
     <div class="action-bar-wrap">
-      <div
-        ref="actionBarRef"
-        class="action-bar font-emoji"
-        :class="{
-          visible: !settingsStore.currentVideoDeviceId && !settingsStore.currentAudioDeviceId,
-        }"
-      >
+      <div ref="actionBarRef" class="action-bar font-emoji visible">
         <div class="action-bar-side">
           <label for="videoSelect">
             <span>Video:</span>
