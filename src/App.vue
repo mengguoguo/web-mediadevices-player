@@ -163,6 +163,7 @@ const startMediaStream = async () => {
             width: conf.width.max,
             frameRate: conf.frameRate.max,
           }
+          console.log(settingsStore.videoConfig)
           vConfig = settingsStore.videoConfig
         } else {
           vConfig = {deviceId: videoId}
@@ -268,9 +269,42 @@ const handleStartStreamingCaptureScreen = async () => {
     const stream = await navigator.mediaDevices.getDisplayMedia({
       video: {
         displaySurface: 'window',
+        frameRate: {
+          ideal: 45, //暂时只设置45，均衡画面和资源占用
+          max: 60,
+        },
       },
       audio: true,
     })
+
+    const track = stream.getVideoTracks()[0]
+    if (track) {
+      const capabilities = track.getCapabilities()
+      console.log('Default width:', capabilities.width)
+      console.log('Default height:', capabilities.height)
+      console.log('Default frame rate:', capabilities.frameRate)
+    }
+    if (track) {
+      console.log('applyConstraints之前')
+      const settings = track.getSettings()
+      console.log('Actual width:', settings.width)
+      console.log('Actual height:', settings.height)
+      console.log('Actual frame rate:', settings.frameRate)
+    }
+    // 请求理想的帧率为30，最大不超过60
+    track.applyConstraints({
+      frameRate: {
+        ideal: 60,
+        max: 60,
+      },
+    })
+    if (track) {
+      console.log('applyConstraints之后')
+      const settings = track.getSettings()
+      console.log('Actual width:', settings.width)
+      console.log('Actual height:', settings.height)
+      console.log('Actual frame rate:', settings.frameRate)
+    }
     mediaStreamRef.value = stream
     // console.log('stream', stream)
     const video = videoRef.value
