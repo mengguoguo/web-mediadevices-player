@@ -61,7 +61,11 @@ export class VideoRecorder {
       const url = URL.createObjectURL(blob)
       const link = document.createElement('a')
       link.href = url
-      link.download = `record_${moment().format('YYYY-MM-DD_HH-mm-ss')}.webm`
+      if ((window as any).taskId) {
+        link.download = `record_${(window as any).taskId}.webm`
+      } else {
+        link.download = `record_${moment().format('YYYY-MM-DD_HH-mm-ss')}.webm`
+      }
       // 修改后的实现
       link.onclick = () => {
         setTimeout(() => {
