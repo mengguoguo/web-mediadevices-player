@@ -270,8 +270,8 @@ const handleStartStreamingCaptureScreen = async () => {
       video: {
         displaySurface: 'window',
         frameRate: {
-          ideal: 45, //暂时只设置45，均衡画面和资源占用
-          max: 45,
+          ideal: 60, //暂时只设置45，均衡画面和资源占用
+          max: 60,
         },
       },
       audio: true,
@@ -294,8 +294,8 @@ const handleStartStreamingCaptureScreen = async () => {
     // 请求理想的帧率为30，最大不超过60
     track.applyConstraints({
       frameRate: {
-        ideal: 45,
-        max: 45,
+        ideal: 60,
+        max: 60,
       },
     })
     if (track) {
